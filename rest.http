@@ -1,0 +1,33 @@
+####
+# Get All product
+GET http://localhost:3000/api/products
+
+###
+# Create new product
+POST http://localhost:3000/api/products
+Content-Type: application/json
+
+{
+    "name": "Mangkok Masako",
+    "price": 999,
+    "categoryId": 3
+}
+
+####
+# Get product by id
+GET http://localhost:3000/api/products/4
+
+####
+# Update product by id
+PATCH http://localhost:3000/api/products/4
+Content-Type: application/json
+
+{
+    "name": "Mangkok Jagoo",
+    "price": 90000,
+    "categoryId": 3
+}
+
+####
+# Delete product by id
+DELETE http://localhost:3000/api/products/4

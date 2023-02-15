@@ -21,6 +21,7 @@
     exp .
     ```
     <br>__Output:__
+    
     ![image](./images/image_2.png) 
 4. Kemudian muncul beberapa folder dan file setelah kita selesai melakukan inisialisasi.
 
@@ -167,20 +168,22 @@
     npm i -D prisma
     ```
     
-    <br>Output:
+    <br>__Output:__
+
     ![image](./images/image_14.png)
+
 2. Install prisma client untuk membuat semua query ke database, dengan script: 
     ```
     npm i @prisma/client  
     ```
-    <br>Output:
+    <br>__Output:__
     ![image](./images/image_15.png)
 
 3. Inisialisasi prisma dengan script 
     ```
     npx prisma init
     ```
-    <br>Output:
+    <br>__Output:__
     ![image](./images/image_4.png)
 
     kemudian muncul folder baru bernama prisma
@@ -263,7 +266,8 @@
     ```
     npx prisma studio
     ```
-    <br>Output:
+    <br>__Output:__
+
     ![image](./images/image_7.png)
 
     
@@ -273,7 +277,8 @@
     ```
     npx prisma migrate dev
     ```
-    <br>Output:
+    <br>__Output:__
+
     ![image](./images/image_12.png)
     Kemudian akan muncul folder migrations. Sampai di sini kita telah berhasil membuat tabel di database. Kita dapat melihatnya dengan menjalankan kembali prisma studio.
 

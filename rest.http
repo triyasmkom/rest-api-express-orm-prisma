@@ -1,16 +1,16 @@
 ####
 # Get All product
-GET http://localhost:3000/api/products
+GET {{url}}/api/products
 
 ###
 # Create new product
-POST http://localhost:3000/api/products
+POST {{url}}/api/products/
 Content-Type: application/json
 
 {
-    "name": "Mangkok Masako",
-    "price": 999,
-    "categoryId": 3
+    "name": "Iphone 4",
+    "price": 12000000,
+    "categoryId": 1
 }
 
 ####
@@ -19,13 +19,13 @@ GET http://localhost:3000/api/products/4
 
 ####
 # Update product by id
-PATCH http://localhost:3000/api/products/4
+PATCH {{url}}/api/products/2
 Content-Type: application/json
 
 {
     "name": "Mangkok Jagoo",
     "price": 90000,
-    "categoryId": 3
+    "categoryId": 1
 }
 
 ####

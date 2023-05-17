@@ -46,7 +46,7 @@ class _response{
             }
 
         } catch (error){
-            log_error('Response Utils', error)
+            console.error('Response Utils', error)
             res.status(500).send({
                 code: 500,
                 status: "INTERNAL_SERVER_ERROR",

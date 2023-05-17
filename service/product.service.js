@@ -12,21 +12,49 @@ class _product{
                 include: {categories: true}
             })
 
+            if (!products){
+                return{
+                    code: 404,
+                    error: 'Sorry, Product Not Found'
+                }
+            }
+
+            return{
+                code: 200,
+                status: true,
+                data: [products]
+            }
+        } catch (error) {
+            if (debug){
+                console.error('Error Get Product', error)
+            }
+            return {
+                code: 500,
+                status: false,
+                error
+            }
+        }
+    }
+    getCategory = async (req)=>{
+        try {
             const categories = await this.db.Category.findMany({
                 include:{products: true}
             })
 
             return{
                 code: 200,
-                data:{
-                    products, categories
-                }
+                status: true,
+                data: [categories]
             }
         } catch (error) {
             if (debug){
-                console.error('Error Get Product', error)
+                console.error('Error Get Product Categories', error)
             }
-            return utils.errorHandler(error)
+            return {
+                code: 500,
+                status: false,
+                error
+            }
         }
     }
 
@@ -40,17 +68,25 @@ class _product{
                 include: {categories:true}
             })
 
+            if (!product){
+                return{
+                    code: 404
+                }
+            }
             return{
                 code: 200,
-                data:{
-                    product
-                }
+                status: true,
+                data: product
             }
         } catch (error) {
             if (debug){
                 console.error('Error Get Product By Id', error)
             }
-            return utils.errorHandler(error)
+            return {
+                code: 500,
+                status: false,
+                error
+            }
         }
     }
 
@@ -62,13 +98,6 @@ class _product{
                 data: {categoryId, name, price, quantity}
             })
 
-            if(product.code){
-                if (debug){
-                    console.error('Error Add Product By Id', error)
-                }
-                return utils.errorHandler(error)
-            }
-
             return{
                 code: 200,
                 data:{
@@ -79,7 +108,21 @@ class _product{
             if (debug){
                 console.error('Error Add Product By Id', error)
             }
-            return utils.errorHandler(error)
+
+            if (error.code === 'P2002') {
+                // Error Duplicate
+                return {
+                    code: 400,
+                    status: "Unique",
+                    error: 'Sorry, Duplicate name product'
+                }
+            }
+
+            return {
+                code: 500,
+                status: false,
+                error
+            }
         }
     }
 
@@ -101,7 +144,19 @@ class _product{
             if (debug){
                 console.error('Error Add Product By Id', error)
             }
-            return utils.errorHandler(error)
+
+            if (error.code === 'P2025'){
+                return {
+                    code: 400,
+                    status: false,
+                    error: error.meta.cause? `Sorry, ${error.meta.cause }`: `Internal Server`
+                }
+            }
+            return {
+                code: 500,
+                status: false,
+                error
+            }
         }
     }
 
@@ -123,9 +178,22 @@ class _product{
             }
         } catch (error) {
             if (debug){
-                console.error('Error Add Product By Id', error)
+                console.error('Error Update Product By Id', error)
             }
-            return utils.errorHandler(error)
+
+            if (error.code === 'P2002') {
+                // Error Duplicate
+                return {
+                    code: 400,
+                    status: false,
+                    error: error.meta.cause? `Sorry, ${error.meta.cause }`: `Internal Server`
+                }
+            }
+            return {
+                code: 500,
+                status: false,
+                error
+            }
         }
     }
 

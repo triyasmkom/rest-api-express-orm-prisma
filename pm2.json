@@ -1,0 +1,20 @@
+{
+  "apps": [{
+    "name": "rest-api",
+    "cwd": "./",
+    "script": "./app.js",
+    "node_args": "--expose-gc",
+    "watch": false,
+    "ignore_watch": [
+      "./node_modules",
+      "./.git"
+    ],
+    "log_date_format": "YYYY-MM-DD HH:mm Z",
+    "exec_mode": "cluster",
+    "instance": "1",
+    "max_memory_restart": "512",
+    "env": {
+      "PORT": "5002"
+    }
+  }]
+}

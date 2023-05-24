@@ -198,6 +198,18 @@ class _product{
     }
 
 
+    penjumlahan = async (a, b)=>{
+        let jumlah
+        try{
+            jumlah =  a+b
+        }catch (error){
+            console.log('Error Penjumlahan', error)
+        }
+
+        return jumlah
+    }
+
+
 }
 
 module.exports = (db)=> new _product(db)

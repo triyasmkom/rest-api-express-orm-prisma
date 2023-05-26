@@ -838,3 +838,122 @@ Delete product by id
 Referensi:
 - https://www.prisma.io/docs/concepts/database-connectors/mysql
 - https://www.youtube.com/watch?v=HCJmlvgO2WY 
+
+
+## Deployment To Server
+
+1. Masuk ke server melalui SSH
+   
+   ```shell
+   # ssh <username>@<domain/ip> -p <port>
+   ssh username@domain.com -p 12345
+   ```
+   
+   Cara masuk dengan SSH dapat menggunakan public key atau password.
+
+2. Kemudian masuk ke directory dimana kita ingin menyimpan project kita.
+
+   ```shell
+   cd nama_direktori
+   ```
+   
+3. Kemudian Clone project kita dari repository
+
+   ```shell
+   git clone https://github.com/user/project.git .
+   ```
+4. Install dependensi dengan pnpm (jika belum ada pnpm https://pnpm.io/id/installation).
+
+   ```shell
+   # cek versi pnpm
+   pnpm -v
+   
+   # install depedensi
+   pnpm i
+   ```
+
+5. Setup file .env di directory project kita
+
+   ```env
+   PORT=12345
+   DATABASE_URL="mysql://root:12345@localhost:3306/todolist"
+   ```
+   
+6. Selanjutnya lakukan migration prisma (jika belum ada npx https://www.npmjs.com/package/npx)
+
+   ```shell
+   # check npx
+   npx -v
+   
+   # migrate database
+   npx prisma migrate deploy
+   ```
+   
+7. Buat config PM2 (untuk install pm2 silakan cari di https://pm2.keymetrics.io/docs/usage/quick-start/).
+
+   Keluar dari directory project kita dan buat folder baru dengan command:
+   ```shell
+   cd ..
+   
+   mkdir "pm2"
+   
+   nano "pm2-project.json"
+   ```
+   
+   masukkan config berikut ini:
+   ```json
+   {
+     "apps": [{
+       "name": "rest-api",
+       "cwd": "./",
+       "script": "./app.js",
+       "node_args": "--expose-gc",
+       "watch": false,
+       "ignore_watch": [
+         "./node_modules",
+         "./.git"
+       ],
+       "log_date_format": "YYYY-MM-DD HH:mm Z",
+       "exec_mode": "cluster",
+       "instance": "1",
+       "max_memory_restart": "512",
+       "env": {
+         "PORT": "5002"
+       }
+     }]
+   }
+   ```
+   
+   property yang perlu diperhatikan yaitu 
+      - name (nama-project),
+      - cwd (lokasi folder project kita), 
+      - script (lokasi file utama kita didasarkan pada cwd-nya ) dan 
+      - PORT (port untuk jalur aplikasi kita)
+      - untuk property yang lain silakan pelajari di dokumentasinya pada link ini https://pm2.keymetrics.io/docs/usage/environment/.
+   
+   Kemudian save dengan cara ```ctrl x```, ketikan yes dan enter.
+
+8. Jalankan aplikasinya
+
+   ```shell
+   pm2 start pm2-project.json
+   ```
+   
+   untuk command pm2:
+
+   ```shell
+   # melihat aplikasi yang berjalan
+   pm2 ls
+   
+   # menghentikan aplikasi
+   pm2 stop id
+   
+   # menjalankan aplikasi
+   pm2 start id
+   
+   # menghapus aplikasi dari pm2
+   pm2 delete id
+   
+   # melihat logs
+   pm2 logs
+   ```

@@ -1,4 +1,59 @@
 # __Membangun REST API sederhana dengan Express JS dan ORM Prisma__
+
+## ERD Database
+
+Contoh ERD dengan mermaid: https://mermaid.js.org/syntax/entityRelationshipDiagram.html
+
+```mermaid
+---
+title: ERD Database
+---
+erDiagram
+   Product }|--|| Category : categoryId
+   Product {
+
+      id         Int       PK   "@id @default(autoincrement())"
+      name       String         "@unique"
+      price      Int            "@default(999)"
+      quantity   Int            "@default(0)"
+      createdAt  DateTime       "@default(now())"
+      categoryId Int       FK
+   }
+
+   Category {
+      id       Int         PK    "@id @default(autoincrement())"
+      name     String
+   }
+   
+   User_Product{
+       user_id      Int
+       product_id   Int
+   }
+
+   Product }|--|| User_Product : product_id
+   Users }|--|| User_Product : user_id
+   Users ||--|| Otp : user_id
+   Users {
+      id                  Int            PK       "@id @default(autoincrement())"
+      uuid                String         UK       "@default(uuid()) @unique"
+      email               String         UK       "@unique"
+      password            String                  "hash"
+      createdAt           DateTime                "@default(now())"
+      updatedAt           DateTime                "@updatedAt"
+      deletedAt           DateTime                "nullable"
+      status              Boolean                 "@default(false)"
+      last_access         DateTime                "nullable"
+   }
+   Otp{
+      id                  Int         PK      "@id @default(autoincrement())"
+      code                String
+      status              Boolean             "@default(false)"
+      timestamp           DateTime            "@default(now())"
+      user_id             Int         UK      "@unique"
+   }
+
+```
+
 ## __Inisiasi Project__
 1. Buatlah folder untuk project Todo List dengan perintah: 
     ```

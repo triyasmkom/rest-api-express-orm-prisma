@@ -917,14 +917,24 @@ Referensi:
    ```shell
    git clone https://github.com/user/project.git .
    ```
-4. Install dependensi dengan pnpm (jika belum ada pnpm https://pnpm.io/id/installation).
+
+   titik (.) disini artinya kita clone ke dalam folder project kita saat ini.
+
+4. Install dependensi dengan ```pnpm``` (jika belum ada pnpm https://pnpm.io/id/installation) atau dengan ```npm``` (Gunakan npm saja. ).
 
    ```shell
-   # cek versi pnpm
+   # cek versi pnpm atau npm
    pnpm -v
+
+   # cek versi pnpm atau npm
+   npm -v
    
-   # install depedensi
+   # install depedensi dengan pnpm
    pnpm i
+
+   # install depedensi dengan npm
+   npm i
+
    ```
 
 5. Setup file .env di directory project kita
@@ -1012,3 +1022,64 @@ Referensi:
    # melihat logs
    pm2 logs
    ```
+
+
+**Catatan:** 
+
+```Deployment ini hanya dilakukan sekali saja, atau pertama kali ketika ingin mendeploy apps kita di server.```
+
+
+## Untuk mengupdate source code apps kita di server:
+1. Pertama, ubah source code kita dari local PC kita, kemudian kita commit dan kita push perubahan source code kita ke git atau repository.
+
+2. Kedua, kita masuk ke folder project kita di server, kemudian kita pull dengan menjalankan:
+
+    ```shell
+    git pull
+    ```
+
+    Pastikan kita melakukan pull sesuai dengan branch yang kita push. Unruk melihat branch saat ini bisa menjalankan:
+
+    ```shell
+    git branch
+    ```
+
+    untuk pindah branch, jalankan perintah:
+
+    ```shell
+    git checkout nama_branch
+    ```
+
+    Pastikan tidak ada perubahan di folder project kita di server sebelum melakukan pull. Untuk melihat status perubahan kita bisa menjalankan perintah:
+
+    ```shell
+    git status
+    ```
+
+3. Ketiga restart ```pm2``` nya:
+
+    ```shell
+    pm2 restart id_pm2
+
+    ```
+
+4. Keempat, pastikan apps kita berjalan dengan baik. Untuk melihatnya, kita bisa jalankan perintah:
+
+    ```shell
+    pm2 ls
+    ```
+
+    atau untuk melihat logs:
+
+    ```shell
+    pm2 logs
+    ```
+
+    untuk keluar dari logs cukup tekan ````ctrl + c```` .
+
+
+
+
+
+
+

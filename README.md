@@ -981,7 +981,7 @@ Referensi:
        "log_date_format": "YYYY-MM-DD HH:mm Z",
        "exec_mode": "cluster",
        "instance": "1",
-       "max_memory_restart": "512",
+       "max_memory_restart": "512M",
        "env": {
          "PORT": "5002"
        }
